@@ -1,0 +1,95 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+  var heroes;
+
+  var socket = io.connect('http://localhost');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+
+  socket.on('heroes', function(data) {
+  	heroes = data;
+  	console.log("loading heroes" + data);
+    for (var i in heroes){
+    	console.log(heroes[i]['name']);
+    }
+    launchGame();	
+  });
+
+var game;  
+var launchGame = function(){
+game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+} 
+
+
+function preload() {
+	game.load.image('sky', 'images/sky.png');
+    game.load.image('ground', 'images/platform.png');
+    game.load.image('star', 'images/star.png');
+    game.load.spritesheet('dude', 'images/dude.png', 32, 48);
+    console.log(heroes + "pre-load")
+
+    for(var i = 0; i < heroes.length; i++){
+    	console.log(i['name']);
+    	game.load.image(heroes[i]['name'], 'images/Monsters/' + heroes[i]['image']);
+    	console.log('images/Monsters/' + i['image']);
+    }
+}
+
+var menuText;
+var draftText;
+var button;
+
+function create() {
+    for(var i = 0; i < heroes.length; i++){
+		game.add.sprite(0 + i*32, 0 + i*32, heroes[i]['name']);	
+    }
+	var text = "Rogue Draft";
+    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+    menuText = game.add.text(game.world.centerX, game.world.centerY - 100, text, style);
+
+	var text = "Hero Draft";
+    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+    draftText = game.add.text(game.world.centerX, 50, text, style);
+   
+    button = game.add.button(game.world.centerX - 95, game.world.centerY + 75, 'star', actionOnClick, this, 2, 1, 0);
+
+    menuText.anchor.setTo(0.5, 0.5);
+    draftText.anchor.setTo(0.5, 0.5);
+    draftText.visible = false;
+}
+
+function update() {
+
+}
+
+function actionOnClick () {
+    menuText.visible = false;
+    draftText.visible = true;
+    socket.emit('my other event', { my: 'data' });
+}
+
+</script>
+
+<script>
+
+</script>
+
+
+</body>
+</html>

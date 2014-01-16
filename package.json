@@ -1,0 +1,10 @@
+{
+  "name": "rogue-draft",
+  "description": "Rogue-Like Draft Game Prototype",
+  "author": "John Turner <john.turner1123@gmail.com>",
+  "dependencies": {
+    "express": "*",
+    "ejs" : "*",
+    "socket.io" : "*"
+  }
+}
