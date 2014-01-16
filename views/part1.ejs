@@ -42,12 +42,9 @@ function preload() {
     game.load.image('ground', 'images/platform.png');
     game.load.image('star', 'images/star.png');
     game.load.spritesheet('dude', 'images/dude.png', 32, 48);
-    console.log(heroes + "pre-load")
 
     for(var i = 0; i < heroes.length; i++){
-    	console.log(i['name']);
     	game.load.image(heroes[i]['name'], 'images/Monsters/' + heroes[i]['image']);
-    	console.log('images/Monsters/' + i['image']);
     }
 }
 
@@ -57,7 +54,7 @@ var button;
 
 function create() {
     for(var i = 0; i < heroes.length; i++){
-		game.add.sprite(0 + i*32, 0 + i*32, heroes[i]['name']);	
+		game.add.sprite(0 + i*32, 32, heroes[i]['name']);	
     }
 	var text = "Rogue Draft";
     var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
