@@ -1,0 +1,103 @@
+canvas {
+   display : block;
+   margin : auto;
+}
+
+body {
+	padding: 50px;
+	font-size: 14px;
+}
+
+a {
+	color: #00B7FF;
+}
+
+#content {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#game {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#play_button {
+	margin-left: auto;
+	margin-right: auto;
+	height: 50px;
+	width: 200px;
+	font-size : 14pt;
+	margin-bottom: 15px;
+}
+
+#room {
+	background-color: #ddd;
+	margin-bottom: 1em;
+}
+
+#messages{
+	float: left;
+	width: 590px;
+	height: 300px;
+	overflow: auto;
+	background-color: #eee;
+	margin-bottom: 1em;
+	margin-right: 10px;
+}
+
+#rooms-list {
+	float: left;
+	width: 100px;
+	height: 285px;
+	overflow: auto;
+}
+
+#rooms-list div {
+	border-bottom: 1px solid #eee;
+}
+.list-container {
+	float: left;
+	width: 200px;
+	height: 300px;
+}
+#user-list {
+	float: left;
+	width: 100px;
+	height: 285px;
+	overflow: auto;
+}
+.list-label {
+	float: left;
+	width: 100px;
+	height: 15px;
+	background-color: #ddd;
+}
+
+#user-list div {
+	border-bottom: 1px solid #eee;
+}
+
+#user-list div:hover { 
+	background-color: #ddd;
+}
+
+#rooms-list div:hover { 
+	background-color: #ddd;
+}
+
+#send-message {
+	width: 700px;
+	margin-bottom: 1em;
+	margin-right: 1em;
+}
+
+#help {
+	font-size: 10px;
+}
+.sub-list{
+	width: 100px;
+	float: left;
+}

@@ -3,7 +3,8 @@ var express = require('express')
 	, http = require('http')
 	, path = require('path')
 	,  io = require('socket.io')
-	, heroes = require('./game/heroes.js');
+	, heroes = require('./game/heroes.js')
+	, chat = require('./lib/chat.js');
 
 var app = express();
 
@@ -18,7 +19,7 @@ app.configure(function() {
 
 
 app.get('/', routes.index);
-
+app.get('/game', routes.game);
 
 var server = http.createServer(app).listen(app.get('port'), function() {
 	console.log("Server listening on port " + app.get('port'));
@@ -29,7 +30,6 @@ io = io.listen(server);
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.emit('heroes', heroes.getHeroes());
-  socket.on('my other event', function (data) {
-    console.log(heroes);
-  });
 });
+
+chat = chat.listen(io);

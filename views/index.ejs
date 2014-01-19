@@ -1,0 +1,38 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Rogue Draft</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<link href="/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id='game'>
+        <button id='play_button'>Play</button>
+    </div>
+<div id='content'>
+    <div id='room'></div>
+    <div id='messages'></div>
+    <div class="list-container">
+        <div class='sub-list'>
+            <div class='list-label'>Users</div>
+            <div id='user-list'></div>
+        </div> 
+        <div class='sub-list'>
+            <div class='list-label'>Rooms</div>
+            <div id='rooms-list'></div>
+        </div>
+    </div>
+<form id='send-form'>
+    <input id='send-message' />
+    <input id='send-button' type='submit' value'Send' />
+</form>
+</div>
+
+<script src="/socket.io/socket.io.js" type='text/javascript'></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/chat.js" type='text/javascript'></script>
+<script src="/js/chatUI.js" type='text/javascript'></script>
+</body>
+</html>

@@ -2,13 +2,14 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-	<title>Phaser - Making your first game, part 1</title>
+	<title>Rogue Draft</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<link href="/css/main.css" media="screen" rel="stylesheet" type="text/css">
     <style type="text/css">
         body {
             margin: 0;
-        }
+        };
     </style>
 </head>
 <body>
@@ -42,24 +43,55 @@ function preload() {
     game.load.image('ground', 'images/platform.png');
     game.load.image('star', 'images/star.png');
     game.load.spritesheet('dude', 'images/dude.png', 32, 48);
+    game.load.spritesheet('dg_undead32.gif', 'images/dg_undead32.gif', 32, 32);
+    game.load.spritesheet('dg_classm32.gif', 'images/dg_classm32.gif', 32, 32);
+    game.load.spritesheet('dg_humans32.gif', 'images/dg_humans32.gif', 32, 32);
+    game.load.spritesheet('dg_monster132.gif', 'images/dg_monster132.gif', 32, 32);
 
     for(var i = 0; i < heroes.length; i++){
-    	game.load.image(heroes[i]['name'], 'images/Monsters/' + heroes[i]['image']);
+    	game.load.image(heroes[i]['name'], 'images/' + heroes[i]['image']);
     }
 }
 
 var menuText;
 var draftText;
+var heroText = {};
 var button;
 
 function create() {
-    for(var i = 0; i < heroes.length; i++){
-		game.add.sprite(0 + i*32, 32, heroes[i]['name']);	
+	setHeroText(heroText, heroes[0]);
+    var numOfHeroes  = 0;
+    var xHeroPos = game.world.centerX / 2;
+    var yHeroPos = game.world.centerY / 2;
+    for(var i = 0; i < 10; i++){
+    	for(var j = 0; j < 5; j++){
+			var s = game.add.sprite(xHeroPos + i*32 + 5*i, yHeroPos + j*32 + j*5, heroes[numOfHeroes]['image'], heroes[numOfHeroes]['frame']);
+			numOfHeroes++;
+	    //  Listen for input events on this sprite
+	    s.inputEnabled = true;
+
+	    //  Check the pixel data of the sprite
+	    s.input.pixelPerfect = true;
+
+	    //  Enable the hand cursor
+	    s.input.useHandCursor = true;
+        
+        (function(heroNumber){
+	        s.events.onInputOver.add(function (){
+	        	var hero = heroes[heroNumber];
+	        	updateHeroText(heroText, hero);}, this);
+
+	    	s.events.onInputOut.add(function (){
+	        	clearHeroText(heroText);}, this);
+	    })(numOfHeroes);
+			
+		}
     }
+    
 	var text = "Rogue Draft";
     var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
-    menuText = game.add.text(game.world.centerX, game.world.centerY - 100, text, style);
-
+    menuText = game.add.text(game.world.centerX, 50, text, style);
+	
 	var text = "Hero Draft";
     var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
     draftText = game.add.text(game.world.centerX, 50, text, style);
@@ -69,6 +101,48 @@ function create() {
     menuText.anchor.setTo(0.5, 0.5);
     draftText.anchor.setTo(0.5, 0.5);
     draftText.visible = false;
+}
+var HP = 'hp';
+var MP = 'mp';
+var STR = 'str';
+var AGI = 'agi';
+var INTEL = 'intel';
+
+var setHeroText = function(heroText, hero){
+	var text = "Name : " + hero['name'];
+    var style = { font: "40px Arial", fill: "#ff0044", align: "center" };
+    var startingStatsPoint = game.world.centerY / 2 + game.world.centerY / 2 + 100;
+    heroText['name'] = game.add.text(game.world.centerX, startingStatsPoint, text, style);
+    heroText[HP] = getStatText(HP, hero[HP], game.world.centerX, startingStatsPoint + 30);
+    heroText[MP] = getStatText(MP, hero[MP], game.world.centerX, startingStatsPoint + 60);
+    heroText[STR] = getStatText(STR, hero[STR], game.world.centerX, startingStatsPoint + 90);
+    heroText[AGI] = getStatText(AGI, hero[AGI], game.world.centerX, startingStatsPoint + 120);
+    heroText[INTEL] = getStatText(INTEL, hero[INTEL], game.world.centerX, startingStatsPoint + 150);	
+}
+
+var getStatText = function(statName, statValue, x, y){
+	var text = statName + ' : ' + statValue;
+    var style = { font: "40px Arial", fill: "#ff0044", align: "center" };
+    var statText = game.add.text(x, y, text, style);
+    return statText;	
+}
+
+var updateHeroText =  function(heroText, hero){
+    heroText['name'].setText(hero['name']);
+    heroText[HP].setText( HP + " : " + hero[HP]);
+    heroText[MP].setText(MP + " : " + hero[MP]);
+    heroText[STR].setText(STR + " : " + hero[STR]);
+    heroText[AGI].setText(AGI + " : " + hero[AGI]);
+    heroText[INTEL].setText(INTEL + " : " + hero[INTEL]);	
+}
+
+var clearHeroText =  function(heroText){
+    heroText['name'].setText('');
+    heroText[HP].setText('');
+    heroText[MP].setText('');
+    heroText[STR].setText('');
+    heroText[AGI].setText('');
+    heroText[INTEL].setText('');	
 }
 
 function update() {
@@ -83,9 +157,6 @@ function actionOnClick () {
 
 </script>
 
-<script>
-
-</script>
 
 
 </body>
