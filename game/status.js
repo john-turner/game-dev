@@ -1,1 +1,1 @@
-var UnitStatus = Object.freeze({"NORMAL":0});
+exports.UnitStatus = Object.freeze({"NORMAL":0});

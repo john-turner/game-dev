@@ -1,9 +1,9 @@
-var status = require('status.js');
+var status = require('./status.js');
 
 
 exports.getHeroes = function(){
 	var heroes = Array();
-
+	console.log('here');
 	for(var i = 0; i < 15; i++){
 		heroes.push(buildUnit(undeadSheet, randomPowerFunction, 'undead', i));
 		heroes.push(buildUnit(classMenSheet, randomPowerFunction, 'class', i));
@@ -45,24 +45,50 @@ var buildUnit = function(spriteSheet, powerFunction, baseName, frameSpot){
 
 exports.DamageInfo = function(damageAmount, attacker, effects, callback){
 	this.damageAmount = damageAmount || 0;
-	this.attackers = attacker || [];
+	this.attacker = attacker || [];
 	this.effects = effects || [];
 	this.callback = callback || function(){};
 }
 
 var unitID = 0;
 
-exports.Unit = function(){
+exports.Unit = function(name, hp, attack, charge, mana){
 	this.unitID = unitID++;
-	this.name = '';
-	this.hp = 0;
-	this.attack = 0;
-	this.charge = 0;
-	this.mana = 0;
+	this.name = name;
+	var hp = hp;
+	var attack = attack;
+	var charge = charge;
+	var mana = mana
 
 	this.turn = false;
 	this.status = status.UnitStatus.NORMAL;
 	
+	this.__defineGetter__("hp", function(){
+		return hp;
+	})
+	this.__defineSetter__("hp", function(val){
+		hp = val;
+	})
+	this.__defineGetter__("attack", function(){
+		return attack;
+	})
+	this.__defineSetter__("attack", function(val){
+		attack = val;
+	})
+	this.__defineGetter__("charge", function(){
+		return charge;
+	})
+	this.__defineSetter__("charge", function(val){
+		charge = val;
+	})
+	this.__defineGetter__("mana", function(){
+		return mana;
+	})
+	this.__defineSetter__("mana", function(val){
+		mana = val;
+	})
+
+
 	this.isDead = function(){
 		return hp === 0;
 	}
@@ -75,6 +101,8 @@ exports.Unit = function(){
 		}
 		damageInfo.callback();	
 	}
+
+
 
 
 }

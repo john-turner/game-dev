@@ -3,8 +3,8 @@ var express = require('express')
 	, http = require('http')
 	, path = require('path')
 	,  io = require('socket.io')
-	, heroes = require('./game/heroes.js')
-	, chat = require('./lib/chat.js');
+	, chat = require('./lib/chat.js')
+	, game = require('./game/game.js');
 
 var app = express();
 
@@ -26,10 +26,6 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 });
 
 io = io.listen(server);
-
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.emit('heroes', heroes.getHeroes());
-});
-
+io.set('log level', 1);
 chat = chat.listen(io);
+game = game.listen(io);

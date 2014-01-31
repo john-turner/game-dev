@@ -17,11 +17,7 @@
 <script type="text/javascript">
   var heroes;
 
-  var socket = io.connect('http://localhost');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+  var socket = io.connect('http://localhost/game');
 
   socket.on('heroes', function(data) {
   	heroes = data;
@@ -36,7 +32,6 @@ var game;
 var launchGame = function(){
 game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 } 
-
 
 function preload() {
 	game.load.image('sky', 'images/sky.png');
