@@ -3,6 +3,10 @@ exports.InputHandler = function(){
 	var currentInputController;
 
 	this.addInputController = function(InputController){
+		var index = inputControllers.indexOf(InputController);	
+		if(index > -1){
+			return;
+		}
 		inputControllers.push(InputController);
 		if(!currentInputController){
 			currentInputController = InputController;
@@ -10,19 +14,37 @@ exports.InputHandler = function(){
 	};
 
 	this.removeInputController = function(InputController){
+		if(currentInputController == InputController){
+			this.switchInputController();
+		}
+
 		var index = inputControllers.indexOf(InputController);		
-		if (index > -1) {
+		if(inputControllers.length == 1){
+			inputControllers = [];
+			currentInputController = null;
+		}
+		else if (index > -1) {
 		    inputControllers.splice(index, 1);
 		}
-		if(currentInputController == currentInputController){
-			if(inputControllers.length > 0){
-				currentInputController = inputControllers[0]; 	
-			}
-		}	
 	};
 
+	this.switchInputController = function(){
+		var index = inputControllers.indexOf(currentInputController);
+		var notNull = index != -1;
+		var notNullOrFirstIndex = index > 0;
+		var notLastIndex = inputControllers.length - 1 != index;
+		if (notNull && notLastIndex) {
+		    currentInputController = inputControllers[index + 1];
+		}		
+		else if(notNullOrFirstIndex){
+			currentInputController = inputControllers[0];	
+		}
+	}
+
 	this.handleInput = function(){
-		currentInputController.update();	
+		if(currentInputController != null){
+			currentInputController.update();
+		}	
 	};
 
 };	

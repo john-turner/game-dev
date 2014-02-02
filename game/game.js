@@ -40,7 +40,7 @@ var findOpenGame = function(socket){
 
 var GameState = Object.freeze({"CONNECTION_SCREEN":0,"HERO_DRAFT":1, "ITEM_DRAFT":2, "HERO_BUILD":3, "BATTLE":4});
 
-var Game = function(){
+exports.Game = function(){
 	this.ID = gameID++;
 	this.room = 'Game'+ this.IDs;
 	this.players = {};

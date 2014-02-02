@@ -4,7 +4,7 @@ var game = require("../game/game.js");
 describe('Game', function(){
   describe('#Game()', function(){
     it('Test Game Construction', function(){
-    	var testGame = game.Game();
+    	var testGame = new game.Game();
     })
   })
 })
@@ -42,8 +42,6 @@ describe('TestInheritance', function(){
   describe('#Vehicle()', function(){
     it('Test Inheritance', function(){
     	var mustang = new Car('mustang', 100, 4);
-    	console.log(mustang.getName());
-    	console.log(mustang.saySpeed());
   })
 })
 })
