@@ -20,6 +20,7 @@ app.configure(function() {
 
 app.get('/', routes.index);
 app.get('/game', routes.game);
+app.get('/movement', routes.movement);
 
 var server = http.createServer(app).listen(app.get('port'), function() {
 	console.log("Server listening on port " + app.get('port'));

@@ -1,0 +1,58 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Rogue Draft</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<link href="/css/main.css" media="screen" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        body {
+            margin: 0;
+        };
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="js/input.js"></script>
+<script type="text/javascript">
+var game;  
+var launchGame = function(){
+game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+} 
+
+function preload() {
+    game.load.image('star', 'images/star.png');
+}
+
+var menuText;
+var draftText;
+var button;
+
+function create() {    
+	var text = "Movement Type: ";
+    var style = { font: "40px Arial", fill: "#ff0044", align: "center" };
+    menuText = game.add.text(game.world.centerX, 50, text, style);
+	
+	var text = "Switch Movement Type With M key.";
+    var style = { font: "25px Arial", fill: "#ff0044", align: "center" };
+    draftText = game.add.text(game.world.centerX, 100, text, style);
+   
+    menuText.anchor.setTo(0.5, 0.5);
+    draftText.anchor.setTo(0.5, 0.5);
+    draftText.visible = false;
+
+    console.log(inputHandler);
+}
+
+
+function update() {
+
+}
+
+launchGame();
+</script>
+
+
+
+</body>
+</html>
